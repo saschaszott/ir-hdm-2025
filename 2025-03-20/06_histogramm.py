@@ -62,5 +62,10 @@ def plot_frequency_distribution(term_frequencies, log_x = False, log_y = False):
 if __name__ == "__main__":
     input_file = "tokens.txt"
     term_frequencies = count_term_frequencies(input_file)
+
+    # Termhäufigkeiten ausgeben
+    print(f"tf(faust): {term_frequencies['faust']}")
+    print(f"tf(pudel): {term_frequencies['pudel']}")
+    
     plot_frequency_distribution(term_frequencies, log_x=False, log_y=False)
     #plot_frequency_distribution(term_frequencies, log_x=True, log_y=True)

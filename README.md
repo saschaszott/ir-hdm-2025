@@ -9,3 +9,4 @@ Moodle-Raum zur Vorlesung: https://moodle.hdm-stuttgart.de/course/view.php?id=21
 
 * 2025-03-20: https://github.com/saschaszott/ir-hdm-2025/blob/main/2025-03-20/README.md
 * 2025-04-03: https://github.com/saschaszott/ir-hdm-2025/blob/main/2025-04-03/README.md
+* 2025-04-05: https://github.com/saschaszott/ir-hdm-2025/blob/main/2025-04-05/README.md

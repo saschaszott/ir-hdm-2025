@@ -1,1 +1,5 @@
 solr/
+pg-metadata.db
+Goethe-inverted-index.json
+Goethe-ebooks.txt
+goethe-works/

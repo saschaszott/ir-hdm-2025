@@ -203,7 +203,7 @@ Der Konflikt muss nun von Ihnen manuell aufgelöst werden. Dazu entfernen Sie en
 
 ### Variante 1: Entscheidung für die Remote-Änderung des Dozenten
 
-Um die entfernte Änderung des Dozenten in der Datei `current-datetime.py` zu übernehmen, entfernen Sie den Teil zwischen `=======` und `>>>>>>> Stashed changes` (z.B. in VS Code), so dass die Datei schließlich folgende Struktur aufweist:
+Um die entfernte Änderung des Dozenten in der Datei `current-datetime.py` zu übernehmen, entfernen Sie den Teil der von `=======` und `>>>>>>> Stashed changes` (z.B. in VS Code) begrenzt wird sowie die Zeile `<<<<<<< Updated upstream`, so dass die Datei schließlich folgende Struktur aufweist:
 
 ```py
 from datetime import datetime
@@ -249,7 +249,7 @@ git stash list
 
 ### Variante 2: Entscheidung für ihre lokale Änderung
 
-Um ihre lokale Änderung in der Datei `current-datetime.py` zu übernehmen, entfernen Sie den Teil zwischen `<<<<<<< Updated upstream` und `=======` (z.B. in VS Code), so dass die Datei schließlich folgende Struktur aufweist:
+Um ihre lokale Änderung in der Datei `current-datetime.py` zu übernehmen, entfernen Sie den Teil der von `<<<<<<< Updated upstream` und `=======` begrenzt wird (z.B. in VS Code) und die Zeile `>>>>>>> Stashed changes`, so dass die Datei schließlich folgende Struktur aufweist:
 
 ```py
 from datetime import datetime
@@ -263,4 +263,3 @@ def main():
 if __name__ == "__main__":
     main()
 ```
-

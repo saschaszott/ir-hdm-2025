@@ -156,3 +156,111 @@ def main():
 if __name__ == "__main__":
     main()
 ```
+
+Wir wissen bereits, dass die Ausführung von `git pull` aufgrund der lokalen Änderung in der Datei `current-datetime.py` mit einem Fehler abbricht. Daher wenden wir erneut die Befehlskaskade `git stash` - `git pull` - `git stash pop` an.
+
+Die ersten beiden Befehle werden erfolgreich ausgeführt.
+
+Bei der Ausführung von `git stash pop` kommt es nun aber zu einer Fehlermeldung:
+
+```
+Auto-merging 2025-04-10/git-update-workflow/current-datetime.py
+CONFLICT (content): Merge conflict in 2025-04-10/git-update-workflow/current-datetime.py
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Unmerged paths:
+  (use "git restore --staged <file>..." to unstage)
+  (use "git add <file>..." to mark resolution)
+	both modified:   current-datetime.py
+
+no changes added to commit (use "git add" and/or "git commit -a")
+The stash entry is kept in case you need it again.
+```
+
+git kann in diesem Fall die beiden Änderungen in der Datei `current-datetime.py` nicht zusammenführen, da sie sich auf die gleiche Zeile beziehen. git vermerkt die nicht auflösbaren Konflikte direkt in der Datei:
+
+```py
+from datetime import datetime
+
+def main():
+    now = datetime.now()
+<<<<<<< Updated upstream
+    # ein Kommentar, der vom Dozenten eingefügt wurde <-- weitere Änderung
+=======
+    # Ausgabe der aktuellen Systemzeit <-- neu eingefügte Zeile
+>>>>>>> Stashed changes
+    print("Aktuelle Systemzeit:", now.strftime("%H:%M:%S"))
+    print("Aktuelles Datum:", now.strftime("%Y-%m-%d")) # <-- neue Zeile hinzugefügt
+
+if __name__ == "__main__":
+    main()
+```
+
+Zuerst wird die Änderung des Dozenten im entfernten GitHub-Repository ausgegeben (im Bereich zwischen `<<<<<<< Updated upstream` und `=======`). Direkt darauffolgend wird die lokale Änderung ausgegeben (zwischen `=======` und `>>>>>>> Stashed changes`).
+
+Der Konflikt muss nun von Ihnen manuell aufgelöst werden. Dazu entfernen Sie entweder den ersten Teil (mit der entfernten Änderung) oder alternativ den zweiten Teil (mit ihrer lokalen Änderung).
+
+### Variante 1: Entscheidung für die Remote-Änderung des Dozenten
+
+Um die entfernte Änderung des Dozenten in der Datei `current-datetime.py` zu übernehmen, entfernen Sie den Teil zwischen `=======` und `>>>>>>> Stashed changes` (z.B. in VS Code), so dass die Datei schließlich folgende Struktur aufweist:
+
+```py
+from datetime import datetime
+
+def main():
+    now = datetime.now()
+    # ein Kommentar, der vom Dozenten eingefügt wurde <-- weitere Änderung
+    print("Aktuelle Systemzeit:", now.strftime("%H:%M:%S"))
+    print("Aktuelles Datum:", now.strftime("%Y-%m-%d")) # <-- neue Zeile hinzugefügt
+
+if __name__ == "__main__":
+    main()
+```
+
+Anschließend führen Sie die folgenden git Befehle aus:
+
+```sh
+git add current-date.py
+git commit -m "Konflikt gelöst: Remote-Version des Dozenten behalten"
+```
+
+Die Ausgabe von `git status` zeigt keine Konflikte mehr an:
+
+```
+On branch main
+Your branch is ahead of 'origin/main' by 1 commit.
+  (use "git push" to publish your local commits)
+
+nothing to commit, working tree clean
+```
+
+In der Zwischenablage (Git Stash) ist die lokale Änderung allerdings immer noch vorhanden. Sie sollte daher noch entfernt werden, um später nicht mit anderen zwischengespeicherten Änderungen durcheinanderzukommen. Mit dem folgenden Befehl wird der oberste Stash-Eintrag entfernt:
+
+```sh
+git stash drop
+```
+
+Anschließend sollte der Stash leer sein, so dass der folgende Befehl ein leeres Ergebnis liefert:
+
+```sh
+git stash list
+```
+
+### Variante 2: Entscheidung für ihre lokale Änderung
+
+Um ihre lokale Änderung in der Datei `current-datetime.py` zu übernehmen, entfernen Sie den Teil zwischen `<<<<<<< Updated upstream` und `=======` (z.B. in VS Code), so dass die Datei schließlich folgende Struktur aufweist:
+
+```py
+from datetime import datetime
+
+def main():
+    now = datetime.now()
+    # Ausgabe der aktuellen Systemzeit <-- neu eingefügte Zeile
+    print("Aktuelle Systemzeit:", now.strftime("%H:%M:%S"))
+    print("Aktuelles Datum:", now.strftime("%Y-%m-%d")) # <-- neue Zeile hinzugefügt
+
+if __name__ == "__main__":
+    main()
+```
+

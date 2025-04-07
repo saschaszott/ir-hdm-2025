@@ -140,3 +140,19 @@ Changes not staged for commit:
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
 
+## Gelingt `git stash pop` immer?
+
+Es kann Fälle geben, in denen der obige Ansatz versagt. Nehmen wir an, dass auch der Dozent zwischen Zeile 4 und Zeile 5 einen Kommentar einfügt und die Änderung mit einem Commit übernimmt, so dass die Datei im entfernten GitHub-Repository des Dozenten folgende Struktur hat:
+
+```py
+from datetime import datetime
+
+def main():
+    now = datetime.now()
+    # ein Kommentar, der vom Dozenten eingefügt wurde <-- weitere Änderung
+    print("Aktuelle Systemzeit:", now.strftime("%H:%M:%S"))
+    print("Aktuelles Datum:", now.strftime("%Y-%m-%d")) # <-- neue Zeile hinzugefügt
+
+if __name__ == "__main__":
+    main()
+```

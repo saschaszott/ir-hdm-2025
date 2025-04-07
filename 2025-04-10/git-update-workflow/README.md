@@ -292,3 +292,118 @@ Anschließend sollte der Stash leer sein, so dass der folgende Befehl ein leeres
 ```sh
 git stash list
 ```
+
+## Alternatives Vorgehen mit einem eigenen Branch
+
+Die Verwendung eines eigenen (lokalen) Branch minimiert Konfliktsituationen und ermöglicht gleichzeitig Änderungen aus dem main-Branch zu integrieren.
+
+### Anlegen eines eigenen Branches
+
+Zuerst muss dazu ein eigener Branch mit einem beliebigen Namen (z.B. `local-changes`) mit dem folgenden Befehl angelegt werden:
+
+```sh
+git checkout -b local-changes
+```
+
+### Hinzufügen von Änderungen zum eigenen Branch
+
+Nun können wir im eigenen Branch eine Änderung an der Datei `current-datetime.py` vornehmen, z.B. fügen wir eine neue Kommentarzeile am Dateianfang ein.
+
+Anschließend können wir die Änderung versionieren, indem wir folgende Befehle aufrufen:
+
+```sh
+git add current-datetime.py
+git commit -m "Änderung am Dateianfang"
+```
+
+Durch dieses Vorgehen können Sie später die Änderungen an der Datei besser nachverfolgen. Sie können mehrere Änderungen zu einer logischen Einheit durch einen Commit zusammenfassen.
+
+### Übernahme von Änderungen aus dem Remote-Repository des Dozenten
+
+Die entfernten Änderungen des Dozenten können Sie durch dieses Vorgehen konfliktfrei in den Hauptzweig (Main Branch) `main` übernehmen, da Sie im Branch `main` keine Änderungen vornehmen.
+
+Wechseln Sie zuerst zum `main` Branch mit folgendem Befehl:
+
+```sh
+git checkout main
+```
+
+Die Änderungen aus dem Remote-Repository bei GitHub holen Sie mit folgendem Befehl:
+
+```sh
+git pull
+```
+
+Nun wechseln Sie zurück in ihren lokalen Branch (z.B. `local-changes`):
+
+```sh
+git checkout local-changes
+```
+
+Schließlich übernehmen Sie die Änderungen mit einem _Merge_ durch folgenden Befehl:
+
+```sh
+git merge main
+```
+
+### Ausführung einer manuellen Konfliktauflösung
+
+Es kann bei der Ausführung des Merge-Befehls zu einem Konflikt kommen, der von Ihnen aufgelöst werden muss. Schauen wir uns auch dafür ein Beispiel an.
+
+Wechseln Sie in ihren lokalen Branch (falls Sie dort nicht bereits sind):
+
+```sh
+git checkout local-changes
+```
+
+Führen Sie eine Änderung in der Datei `current-datetime.py` aus, indem Sie in dem Methodenkommentar zwei neue Zeile einfügen, so dass ihre Version der Datei folgendermaßen aussieht:
+
+```py
+from datetime import datetime
+
+def main():
+    """
+    Diese Funktion gibt die aktuelle Systemzeit.
+
+
+    """
+    now = datetime.now()    
+    print("Aktuelle Systemzeit:", now.strftime("%H:%M:%S"))    
+
+if __name__ == "__main__":
+    main()
+```
+
+Führen Sie nun (wie oben beschrieben) einen Commit aus:
+
+```sh
+git add current-datetime.py
+git commit -m "Änderung im Methodenkommentar"
+```
+
+Nun wird auch ihr Dozent eine Änderung im Methodenkommentar vornehmen, so dass die Version der Datei im Remote-Repository bei GitHub folgende Struktur aufweist:
+
+```py
+from datetime import datetime
+
+def main():
+    """
+    Diese Funktion gibt die aktuelle Systemzeit.
+    Es wird kein Argument erwartet.
+    """
+    now = datetime.now()    
+    print("Aktuelle Systemzeit:", now.strftime("%H:%M:%S"))    
+
+if __name__ == "__main__":
+    main()
+```
+
+Führen Sie nun die oben beschriebenen Befehle zur Integration dieser Änderung im entfernten GitHub-Repository aus:
+
+```sh
+git checkout main
+git pull
+git checkout local-changes
+```
+
+

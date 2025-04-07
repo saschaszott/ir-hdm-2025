@@ -264,10 +264,11 @@ if __name__ == "__main__":
     main()
 ```
 
-Anschließend führen Sie den folgenden git Befehl aus:
+Anschließend führen Sie die folgenden git Befehle aus:
 
 ```sh
 git add current-date.py
+git commit -m "Konflikt gelöst: lokale Änderung vorziehen"
 ```
 
 Die Ausgabe von `git status` zeigt keine Konflikte mehr an:

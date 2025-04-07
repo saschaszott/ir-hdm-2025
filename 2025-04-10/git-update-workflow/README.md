@@ -406,4 +406,45 @@ git pull
 git checkout local-changes
 ```
 
+Führen wir nun den Befehl `git merge main` aus, so kommt es zu einer Konfiktsituation, wie wir in der Befehlsausgabe erkennen:
 
+```
+Auto-merging 2025-04-10/git-update-workflow/current-datetime.py
+CONFLICT (content): Merge conflict in 2025-04-10/git-update-workflow/current-datetime.py
+Automatic merge failed; fix conflicts and then commit the result.
+```
+
+Wir müssen in diesem Fall den Konflikt manuell auflösen, wobei die Konflikte innerhalb der Datei wie folgt markiert werden:
+
+```py
+from datetime import datetime
+
+def main():
+    """
+    Diese Funktion gibt die aktuelle Systemzeit.
+<<<<<<< HEAD
+
+
+=======
+    Es wird kein Argument erwartet.
+>>>>>>> main
+    """
+    now = datetime.now()
+    print("Aktuelle Systemzeit:", now.strftime("%H:%M:%S"))
+
+if __name__ == "__main__":
+    main()
+```
+
+Wir können uns für eine der beiden Änderungen entscheiden, indem wir den Teil oberhalb oder unterhalb von `=======` belassen und den anderen Konfliktteil löschen (sowie die Markierungszeilen). Anschließend können wir das Ergebnis versionieren, indem wir einen Commit ausführen:
+
+```sh
+git commit -m 'Konflikt aufgelöst: Änderungen des Dozenten übernommen'
+```
+
+Dadurch ist die Konfliktauflösung abgeschlossen, wie wir auch an der Ausgabe von `git status` sehen können:
+
+```sh
+On branch local-changes
+nothing to commit, working tree clean
+```

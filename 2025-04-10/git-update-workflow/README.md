@@ -263,3 +263,31 @@ def main():
 if __name__ == "__main__":
     main()
 ```
+
+Anschließend führen Sie den folgenden git Befehl aus:
+
+```sh
+git add current-date.py
+```
+
+Die Ausgabe von `git status` zeigt keine Konflikte mehr an:
+
+```
+On branch main
+Your branch is ahead of 'origin/main' by 1 commit.
+  (use "git push" to publish your local commits)
+
+nothing to commit, working tree clean
+```
+
+In der Zwischenablage (Git Stash) ist die lokale Änderung allerdings immer noch vorhanden. Sie sollte daher noch entfernt werden, um später nicht mit anderen zwischengespeicherten Änderungen durcheinanderzukommen. Mit dem folgenden Befehl wird der oberste Stash-Eintrag entfernt:
+
+```sh
+git stash drop
+```
+
+Anschließend sollte der Stash leer sein, so dass der folgende Befehl ein leeres Ergebnis liefert:
+
+```sh
+git stash list
+```

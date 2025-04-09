@@ -225,7 +225,7 @@ if __name__ == "__main__":
 Anschließend führen Sie die folgenden git Befehle aus:
 
 ```sh
-git add current-date.py
+git add current-datetime.py
 git commit -m "Konflikt gelöst: Remote-Version des Dozenten behalten"
 ```
 
@@ -271,7 +271,7 @@ if __name__ == "__main__":
 Anschließend führen Sie die folgenden git Befehle aus:
 
 ```sh
-git add current-date.py
+git add current-datetime.py
 git commit -m "Konflikt gelöst: lokale Änderung vorziehen"
 ```
 

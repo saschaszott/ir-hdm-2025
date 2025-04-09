@@ -48,6 +48,8 @@ Changes not staged for commit:
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
 
+Solange Sie die Änderung nicht mittels `git add current-datetime.py` in die _Staging Area_ übernehmen, bekommt git von ihrer lokalen Änderung nichts mit.
+
 ## Ausführung einer Änderung durch den Dozenten
 
 Nun wird der Dozent die Datei `current-datetime.py` im Remote-Repository (bei GitHub) ändern.

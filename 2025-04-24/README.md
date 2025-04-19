@@ -41,6 +41,7 @@ Das Programm liest den bereits im Praxistag erzeugten invertierten Index für di
     ],
     ...
 }
+```
 
 Anschließend fragt das Programm eine boolesche Suchanfrage vom Nutzer ab. Diese wird schließlich vom Programm geparst. Mit dem Ergebnis des Parsings erfolgt schließlich die Anfrageverarbeitung auf dem invertieren Index.
 

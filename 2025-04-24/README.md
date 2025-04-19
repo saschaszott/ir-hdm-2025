@@ -4,27 +4,53 @@
 
 interaktive Webanwendung: https://saschaszott.github.io/ir-hdm-2025/2025-04-24/postingslists-processing/
 
-In dieser Anwendung sind die Basisoperationen AND, OR und NOT+AND (bzw. AND+NOT) mittels JavaScript umgesetzt.
+In dieser Anwendung sind die Basisoperationen AND, OR und NOT+AND (bzw. AND+NOT) mittels **JavaScript** umgesetzt.
 
 ## Boolesches Retrieval und Parsing von Booleschen Suchanfragen
 
-Die bereits in JavaScript implementierten Algorithmen für die Anfrageverarbeitung auf dem invertierten Index wurden analog mit Python umgesetzt. Zudem ist es erforderlich komplexere Suchanfragen zu unterstützen. Dafür wird ein Parser benötigt.
+Die bereits in JavaScript implementierten Algorithmen für die Anfrageverarbeitung auf dem invertierten Index wurden analog mit **Python** umgesetzt. Zudem ist es erforderlich komplexere Suchanfragen zu unterstützen. Dafür wird ein Parser benötigt.
 
 ### Ein einfacher selbstgebastelter Parser
 
 Dieser Parser wurde zu Übungszwecken implementiert. In der Praxis sollten Sie eigene Parser **nur in begründeten Ausnahmefällen** selbst implementieren.
 
-Das Programm liest den bereits im Praxistag erzeugten invertierten Index für die 49 Werke von Goethe aus der JSON-Datei `Goethe-inverted-index.json` ein. 
+Das Programm liest den bereits im Praxistag erzeugten invertierten Index für die 49 Werke von Goethe aus der JSON-Datei `Goethe-inverted-index.json` ein. Die Datei hat folgende Struktur:
 
-Anschließend fragt das Programm eine boolesche Suchanfrage vom Nutzer ab. Diese wird schließlich geparst. Mit dem Ergebnis des Parsings erfolgt schließlich die Anfrageverarbeitung auf dem invertieren Index.
+```json
+{
+    ...
+    "herbst": [
+        "2230",
+        "2319",
+        "2320",
+        "2402",
+        "2403",
+        "2404",
+        "2405",
+        "2408",
+        "2411",
+        "10425",
+        "46021",
+        "48919"
+    ],
+    "herbstabend": [
+        "2404"
+    ],
+    "herbstaufenthalte": [
+        "2405"
+    ],
+    ...
+}
 
-Start des Programms:
+Anschließend fragt das Programm eine boolesche Suchanfrage vom Nutzer ab. Diese wird schließlich vom Programm geparst. Mit dem Ergebnis des Parsings erfolgt schließlich die Anfrageverarbeitung auf dem invertieren Index.
+
+Start des Programms mittels:
 
 ```sh
 python 01_boolean-retrieval.py
 ```
 
-Das Programm unterstützt nur sehr einfache Anfragen:
+Das Programm unterstützt nur sehr einfache Typen von Suchanfragen:
 
 * 1-Term-Suchanfrage
 * negierte 1-Term-Suchanfrage
@@ -33,9 +59,9 @@ Das Programm unterstützt nur sehr einfache Anfragen:
 
 Die Eingabe anderer Suchanfragen löst einen **Syntaxfehler** aus.
 
-### Parser, die komplexere boolesche Suchanfragen unterstützen.
+### Parser, die komplexere boolesche Suchanfragen unterstützen
 
-Hier schauen wir uns zwei erweiterte Ansätze für das Parsing von booleschen Suchanfragen an. Für **einfache Grammatiken** kann `pyparsing` verwendet werden. Für **komplexere Grammatiken** bietet sich die Formulierung in der EBNF an. Mit `lark` steht ein mächtiges Python-Paket zur Verarbeitung von Grammatiken (in EBNF) zur Verfügung. `lark` unterstützt LALR-Parsing.
+Hier schauen wir uns zwei erweiterte Ansätze für das Parsing von booleschen Suchanfragen an. Für **einfache Grammatiken** kann `pyparsing` verwendet werden. Für **komplexere Grammatiken** bietet sich die Formulierung der Grammatik in der EBNF an. Mit `lark` steht ein mächtiges Python-Paket zur Verarbeitung von Grammatiken (in EBNF) zur Verfügung. `lark` unterstützt LALR-Parsing.
 
 Ziel ist es folgende Typen von Suchanfragen zu unterstützen:
 
@@ -59,13 +85,13 @@ python 02_pyparsing.py
 
 Das Programm fragt eine Suchanfrage vom Benutzer ab und gibt anschließend das Ergebnis des Parsings – einen **Parsingbaum** – aus.
 
-Der Parsingbaum wird als mit Klammern geschachtelte Struktur ausgegeben:
+Der Parsingbaum wird als eine mit Klammern geschachtelte Struktur ausgegeben.
+
+Für die Boolesche Suchanfrage `(NOT sommer OR winter) AND herbst` gibt das Programm folgende Struktur aus:
 
 ```
 [[[['NOT', sommer], 'OR', winter], 'AND', herbst]]
 ```
-
-für die Boolesche Suchanfrage `(NOT sommer OR winter) AND herbst`.
 
 #### Parsing mit lark
 
@@ -93,9 +119,11 @@ and_expr
   herbst
 ```
 
-#### Grafische Ausgabe des Parsing-Baums
+#### Grafische Ausgabe des AST
 
-Zuerst müssen wir das Paket mit dem Paketmanager, z.B. `pip`, installieren:
+Wir wollen nun eine grafische Darstellung des AST ausgeben.
+
+Zuerst müssen wir das Paket `pydot` mit dem Paketmanager, z.B. `pip`, installieren:
 
 ```sh
 pip install pydot 

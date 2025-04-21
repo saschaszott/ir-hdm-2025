@@ -21,4 +21,4 @@ Diese Auflistung wird im Laufe des Sommersemesters fortlaufend ergänzt.
 * 2025-05-24
   * Interaktiver Demonstrator: https://github.com/saschaszott/ir-hdm-2025/blob/main/2025-04-24/postingslists-processing
   * Parsing von Booleschen Suchanfragen (mit pyparsing und lark): https://github.com/saschaszott/ir-hdm-2025/blob/main/2025-04-24/README.md
-* 2025-05-08
+* 2025-05-08: https://github.com/saschaszott/ir-hdm-2025/blob/main/2025-05-08/README.md

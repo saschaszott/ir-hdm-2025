@@ -14,21 +14,41 @@ Ausführung des Demonstrators:
 python 01_jaccard-similarity.py
 ```
 
-Das Programm nutzt eine definierte Menge von 5 Dokumenten _d1_ bis _d5_. Die Termmengen dieser Dokumente sind innerhalb des Programms definiert. Beim Start des Programms werdend die 5 Termmengen ausgegeben.
+Das Programm nutzt eine definierte Menge von 6 Beispieldokumenten _d1_ bis _d6_. 
 
-Beispielsitzung:
+Die Termmengen dieser Dokumente sind innerhalb des Programms definiert. Beim Start des Programms werden die Termmengen der 6 Beispieldokumente ausgegeben. Anschließend kann der Benutzer eine beliebige Freitextsuchanfrage eingeben. Das Programm gibt als Ergebnis ein Top-5-Ranking (hier ist _k_=5) aus.
+
+Beispielsitzung für die Suchanfrage _data retrieval_:
 
 ```
-d1: {'system', 'information', 'retrieval'}
-d2: {'science', 'information', 'search'}
-d3: {'database', 'retrieval', 'data'}
-d4: {'ranking', 'vector', 'retrieval', 'space'}
+d1: {'information', 'system', 'retrieval'}
+d2: {'information', 'search', 'science'}
+d3: {'retrieval', 'data', 'database'}
+d4: {'space', 'vector', 'retrieval', 'ranking'}
 d5: {'sql', 'data', 'database'}
-Geben Sie Ihre Suchanfrage ein: information retrieval
-Top-10-Ranking der Dokumente bezüglich ihrer Jaccard-Ähnlichkeit:
-d1 (J-K = 0.667)
-d2 (J-K = 0.250)
-d3 (J-K = 0.250)
+d6: {'sql', 'data', 'database'}
+Geben Sie Ihre Suchanfrage ein: data retrieval
+Top-5-Ranking der Dokumente bezüglich ihrer Jaccard-Ähnlichkeit:
+d3 (J-K = 0.667)
+d1 (J-K = 0.250)
+d5 (J-K = 0.250)
+d6 (J-K = 0.250)
 d4 (J-K = 0.200)
 ```
 
+Da die Häufigkeit der Suchanfrageterme in den einzelnen Dokumenten nicht beachtet wird, erhalten die Dokumente _d5_ und _d6_ den gleichen Scorewert auf Basis der Jaccard-Ähnlichkeit, obwohl der Term
+_data_ dreimal in _d6_, aber nur einmal in _d5_ existiert.
+
+Da die Reihenfolge der Suchanfrageterme in den einzelnen Dokumenten nicht betrachtet wird, liefert die Suchanfrage _retrieval data_ das gleiche Top-5-Ranking (die Score-Werte auf Basis der Jaccard-Ähnlichkeit stimmen überein):
+
+```
+Geben Sie Ihre Suchanfrage ein: retrieval data
+Top-5-Ranking der Dokumente bezüglich ihrer Jaccard-Ähnlichkeit:
+d3 (J-K = 0.667)
+d1 (J-K = 0.250)
+d5 (J-K = 0.250)
+d6 (J-K = 0.250)
+d4 (J-K = 0.200)
+```
+
+Aus dem Suchergebnis können wir ableiten, dass ein Dokument im Top-_k_-Ranking nicht alle Suchanfrageterme besitzen muss. Beispielsweise enthalten die Dokumente _d5_ und _d6_ den Suchanfrageterm _retrieval_ nicht.

@@ -4,7 +4,8 @@ documents = {
     "d2": {"information", "science", "search"},
     "d3": {"data", "retrieval", "database"},
     "d4": {"retrieval", "ranking", "vector", "space"},
-    "d5": {"database", "sql", "data"}
+    "d5": {"database", "sql", "data"},
+    "d6": {"database", "sql", "data", "data", "data"}
 }
 
 def print_all_documents():
@@ -16,8 +17,9 @@ def jaccard_similarity(set1, set2):
     union = set1 | set2 # Vereinigungsmenge
     return len(intersection) / len(union) if union else 0 # Vermeidung von Division durch Null
 
-def jaccard_scoring(query, documents, k=10):
+def jaccard_scoring(query, documents, k):
     # Jaccard-Ähnlichkeit der einzelnen Dokumente bezüglich Anfrage berechnen
+    # und Top-k-Ranking ausgeben
     results = []
     for doc_id, terms in documents.items():
         score = jaccard_similarity(query, terms)
@@ -42,4 +44,4 @@ if __name__ == "__main__":
     
     query = input("Geben Sie Ihre Suchanfrage ein: ")
     query_terms = build_query_term_set(query)
-    jaccard_scoring(query_terms, documents)
+    jaccard_scoring(query_terms, documents, 5)

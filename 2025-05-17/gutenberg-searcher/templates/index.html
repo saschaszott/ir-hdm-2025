@@ -46,7 +46,7 @@
             </div>
 
             <div class="col-md-10 book-meta">
-                <h5>({{loop.index}}) {{ result.title }}</h5>
+                <h5>({{loop.index + 10 * (page - 1)}}) {{ result.title }}</h5>
                 <p>{{ ", ".join(result.author_names) }}</p>
                 <p>
                     {% set summary = result.summaries[0][:500] if result.summaries %}
@@ -68,24 +68,42 @@
                 <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#modal{{ result.id }}">
                     Erklärung
                 </button>
-            </p>
+                </p> 
+            </div>          
 
             <!-- Bootstrap Modal -->
             <div class="modal fade" id="modal{{ result.id }}" tabindex="-1" aria-labelledby="modalLabel{{ result.id }}" aria-hidden="true">
                 <div class="modal-dialog modal-lg modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
-                    <h5 class="modal-title" id="modalLabel{{ result.id }}">Berechnung des Score-Werts</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
+                        <h5 class="modal-title" id="modalLabel{{ result.id }}">Berechnung des Score-Werts</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
                     </div>
                     <div class="modal-body">
-                    <pre>{{ result.explanation }}</pre>
+                        <pre>{{ result.explanation }}</pre>
                     </div>
                 </div>
                 </div>
             </div>
         </div>
         {% endfor %}
+        <nav class="navbar bg-light">
+            <div class="container">
+                <ul class="navbar-nav mx-auto">
+                    {% if page > 1 %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="search?q={{ query }}&page={{ page - 1 }}">Zurück</a>
+                    </li>
+                    {% endif %}
+
+                    {% if page < total_pages %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="search?q={{ query }}&page={{ page + 1 }}">Weiter</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>        
     {% elif query %}
         <h4 class="mt-4">Keine Ergebnisse gefunden</h2>
     {% endif %}

@@ -33,7 +33,7 @@ def index_content():
                 text_file = os.path.join("fulltexts", str(metadata.get("id")) + ".txt")
                 full_text = ""
                 if os.path.exists(text_file):
-                    with open(text_file, "r") as full_text_file:
+                    with open(text_file, "r", encoding="utf-8") as full_text_file:
                         full_text = full_text_file.read()
 
                 id = metadata.get("id")

@@ -124,11 +124,12 @@
                         </div>
 
                         <p>
-                        <strong>Score:</strong> {{ result.score | round(2) }}
-                        <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#modal{{ result.id }}">
-                            Erklärung
-                        </button>
-                        </p> 
+                            Score-Wert: {{ result.score | round(2) }}
+                            <button class="ml-2 btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#modal{{ result.id }}">
+                                Erklärung
+                            </button>
+                            <small class="ml-2">(Gutenberg-Dokument-ID: {{ result.id }})</small>
+                        </p>
                     </div>          
 
                     <!-- Bootstrap Modal -->

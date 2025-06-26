@@ -14,8 +14,8 @@ def search(query):
     params = {
         "qf": "title^3 authors^2 keywords^1",   # Gewichtung der Felder, die durchsucht werden
         "defType": "edismax",                   # Erweiterte DisMax-Suche
-        "rows": 10,                             # maximale Anzahl der Suchergebnisse
-        "fl": "title, authors, year, score",    # Felder, die zurückgegeben werden
+        "rows": 20,                             # maximale Anzahl der Suchergebnisse
+        "fl": "title, authors, publication_year, score",    # Felder, die zurückgegeben werden
     }
 
     results = solr.search(query, **params)  # Top-10-Ranking ermitteln
@@ -29,7 +29,7 @@ def search(query):
     for i, result in enumerate(results):
         title = result.get("title")[0]
         authors = ", ".join(result.get("authors"))
-        year = result.get("year")[0]
+        year = result.get("publication_year")[0]
         score = result.get("score")
         print(f"Suchtreffer # {i+1}: {title} ({year}) von {authors} (Score: {score})")
 
